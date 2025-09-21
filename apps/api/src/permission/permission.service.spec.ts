@@ -335,9 +335,10 @@ describe('PermissionService', () => {
   describe('getInheritedPermissions (private method)', () => {
     it('should return permissions from lower roles in hierarchy', async () => {
       // Mock repository calls for hierarchy check
-      mockRepository.findByRoleAndFeature
-        .mockResolvedValueOnce([]) // No direct permission for ADMIN
-        .mockResolvedValueOnce([mockViewerViewPermission]); // VIEWER has permission
+      // For ADMIN role, lower roles are [VIEWER]
+      mockRepository.findByRoleAndFeature.mockResolvedValueOnce([
+        mockViewerViewPermission,
+      ]); // VIEWER has permission
 
       const result = await (service as any).getInheritedPermissions(
         Role.ADMIN,

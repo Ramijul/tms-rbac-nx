@@ -5,9 +5,9 @@
 CREATE TABLE IF NOT EXISTS organizations (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    "parentOrgId" INTEGER NULL,
+    parent_org_id INTEGER NULL,
     CONSTRAINT fk_organizations_parent 
-        FOREIGN KEY ("parentOrgId") 
+        FOREIGN KEY (parent_org_id) 
         REFERENCES organizations(id) 
         ON DELETE SET NULL
 );
@@ -28,30 +28,28 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create org_user_roles table for user-organization role assignments
 CREATE TABLE IF NOT EXISTS org_user_roles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    "orgId" INTEGER NOT NULL,
-    "userId" UUID NOT NULL,
+    org_id INTEGER NOT NULL,
+    user_id UUID NOT NULL,
     role VARCHAR(50) NOT NULL,
     CONSTRAINT fk_org_user_roles_organization 
-        FOREIGN KEY ("orgId") 
-        REFERENCES organizations(id) 
-        ON DELETE CASCADE,
+        FOREIGN KEY (org_id) 
+        REFERENCES organizations(id),
     CONSTRAINT fk_org_user_roles_user 
-        FOREIGN KEY ("userId") 
-        REFERENCES users(id) 
-        ON DELETE CASCADE,
+        FOREIGN KEY (user_id) 
+        REFERENCES users(id),
     CONSTRAINT unique_org_user_role 
-        UNIQUE ("orgId", "userId")
+        UNIQUE (org_id, user_id)
 );
 
 -- Insert sample organizations
-INSERT INTO organizations (id, name, "parentOrgId") VALUES
+INSERT INTO organizations (id, name, parent_org_id) VALUES
 (1, 'Acme Corporation', NULL),
 (2, 'Engineering Department', 1),
 (3, 'Marketing Department', 1),
@@ -103,15 +101,15 @@ INSERT INTO permissions (role, feature, action) VALUES
 ('VIEWER', 'reports', 'view');
 
 -- Create indexes for better performance
-CREATE INDEX IF NOT EXISTS idx_organizations_parent_org_id ON organizations("parentOrgId");
+CREATE INDEX IF NOT EXISTS idx_organizations_parent_org_id ON organizations(parent_org_id);
 CREATE INDEX IF NOT EXISTS idx_permissions_role ON permissions(role);
 CREATE INDEX IF NOT EXISTS idx_permissions_feature ON permissions(feature);
 CREATE INDEX IF NOT EXISTS idx_permissions_action ON permissions(action);
 CREATE INDEX IF NOT EXISTS idx_permissions_role_feature ON permissions(role, feature);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
-CREATE INDEX IF NOT EXISTS idx_users_created_at ON users("createdAt");
-CREATE INDEX IF NOT EXISTS idx_org_user_roles_org_id ON org_user_roles("orgId");
-CREATE INDEX IF NOT EXISTS idx_org_user_roles_user_id ON org_user_roles("userId");
+CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at);
+CREATE INDEX IF NOT EXISTS idx_org_user_roles_org_id ON org_user_roles(org_id);
+CREATE INDEX IF NOT EXISTS idx_org_user_roles_user_id ON org_user_roles(user_id);
 CREATE INDEX IF NOT EXISTS idx_org_user_roles_role ON org_user_roles(role);
 
 -- Reset sequences to start from the next available ID

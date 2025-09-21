@@ -16,20 +16,20 @@ export class OrgUserRole {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', name: 'org_id' })
   orgId: number;
 
-  @Column({ type: 'uuid' })
+  @Column({ type: 'uuid', name: 'user_id' })
   userId: string;
 
   @Column({ type: 'enum', enum: Role })
   role: Role;
 
-  @ManyToOne(() => Organization, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'orgId' })
+  @ManyToOne(() => Organization)
+  @JoinColumn({ name: 'org_id' })
   organization: Organization;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'userId' })
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 }

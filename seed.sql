@@ -22,6 +22,16 @@ CREATE TABLE IF NOT EXISTS permissions (
         UNIQUE (role, feature, action)
 );
 
+-- Create users table for authentication
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Insert sample organizations
 INSERT INTO organizations (id, name, "parentOrgId") VALUES
 (1, 'Acme Corporation', NULL),
@@ -80,6 +90,8 @@ CREATE INDEX IF NOT EXISTS idx_permissions_role ON permissions(role);
 CREATE INDEX IF NOT EXISTS idx_permissions_feature ON permissions(feature);
 CREATE INDEX IF NOT EXISTS idx_permissions_action ON permissions(action);
 CREATE INDEX IF NOT EXISTS idx_permissions_role_feature ON permissions(role, feature);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_users_created_at ON users("createdAt");
 
 -- Reset sequences to start from the next available ID
 SELECT setval('organizations_id_seq', (SELECT MAX(id) FROM organizations));

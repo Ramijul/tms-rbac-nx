@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrganizationService } from './organization.service';
 import { OrganizationRepository } from './organization.repository';
-import { Organization } from './organization.entity';
+import { Organization } from './entities/organization.entity';
 
 describe('OrganizationService', () => {
   let service: OrganizationService;

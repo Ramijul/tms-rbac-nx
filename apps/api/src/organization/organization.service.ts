@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Organization } from './organization.entity';
+import { Organization } from './entities/organization.entity';
 import { OrganizationRepository } from './organization.repository';
 
 @Injectable()

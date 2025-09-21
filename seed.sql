@@ -32,6 +32,24 @@ CREATE TABLE IF NOT EXISTS users (
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Create org_user_roles table for user-organization role assignments
+CREATE TABLE IF NOT EXISTS org_user_roles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    "orgId" INTEGER NOT NULL,
+    "userId" UUID NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_org_user_roles_organization 
+        FOREIGN KEY ("orgId") 
+        REFERENCES organizations(id) 
+        ON DELETE CASCADE,
+    CONSTRAINT fk_org_user_roles_user 
+        FOREIGN KEY ("userId") 
+        REFERENCES users(id) 
+        ON DELETE CASCADE,
+    CONSTRAINT unique_org_user_role 
+        UNIQUE ("orgId", "userId")
+);
+
 -- Insert sample organizations
 INSERT INTO organizations (id, name, "parentOrgId") VALUES
 (1, 'Acme Corporation', NULL),
@@ -92,6 +110,9 @@ CREATE INDEX IF NOT EXISTS idx_permissions_action ON permissions(action);
 CREATE INDEX IF NOT EXISTS idx_permissions_role_feature ON permissions(role, feature);
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_users_created_at ON users("createdAt");
+CREATE INDEX IF NOT EXISTS idx_org_user_roles_org_id ON org_user_roles("orgId");
+CREATE INDEX IF NOT EXISTS idx_org_user_roles_user_id ON org_user_roles("userId");
+CREATE INDEX IF NOT EXISTS idx_org_user_roles_role ON org_user_roles(role);
 
 -- Reset sequences to start from the next available ID
 SELECT setval('organizations_id_seq', (SELECT MAX(id) FROM organizations));

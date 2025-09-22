@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PermissionRepository } from './permission.repository';
 import { Permission } from './permission.entity';
-import { Role, PermissionAction } from './role.enum';
+import { Role, PermissionAction } from '@tms-rbac-nx/data/role.enum';
 
 describe('PermissionRepository', () => {
   let repository: PermissionRepository;

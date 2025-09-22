@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
-import { Role, PermissionAction } from './role.enum';
+import { Role, PermissionAction } from '@tms-rbac-nx/data/role.enum';
 
 @Entity('permissions')
 @Unique(['role', 'feature', 'action'])

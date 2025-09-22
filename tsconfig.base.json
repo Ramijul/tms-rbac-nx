@@ -18,8 +18,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@tms-rbac-nx/data/auth": [
-        "libs/data/auth.ts"
+      "@tms-rbac-nx/data/*": [
+        "libs/data/*"
       ]
     }
   },

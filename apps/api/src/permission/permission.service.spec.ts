@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PermissionService } from './permission.service';
 import { PermissionRepository } from './permission.repository';
 import { Permission } from './permission.entity';
-import { Role, PermissionAction } from './role.enum';
+import { Role, PermissionAction } from '@tms-rbac-nx/data/role.enum';
 
 describe('PermissionService', () => {
   let service: PermissionService;

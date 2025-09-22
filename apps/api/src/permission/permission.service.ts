@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Permission } from './permission.entity';
 import { PermissionRepository } from './permission.repository';
-import { Role, PermissionAction } from './role.enum';
+import { Role, PermissionAction } from '@tms-rbac-nx/data/role.enum';
 
 @Injectable()
 export class PermissionService {

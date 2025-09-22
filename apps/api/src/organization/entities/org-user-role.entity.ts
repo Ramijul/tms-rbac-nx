@@ -7,7 +7,7 @@ import {
   Unique,
 } from 'typeorm';
 import { User } from '../../auth/auth.entity';
-import { Role } from '../../permission/role.enum';
+import { Role } from '@tms-rbac-nx/data/role.enum';
 import { Organization } from './organization.entity';
 
 @Entity('org_user_roles')

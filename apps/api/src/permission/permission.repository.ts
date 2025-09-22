@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Permission } from './permission.entity';
-import { Role, PermissionAction } from './role.enum';
+import { Role, PermissionAction } from '@tms-rbac-nx/data/role.enum';
 
 @Injectable()
 export class PermissionRepository {

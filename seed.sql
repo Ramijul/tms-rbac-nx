@@ -134,22 +134,15 @@ INSERT INTO org_user_roles (org_id, user_id, role) VALUES
 (7, '550e8400-e29b-41d4-a716-446655440021', 'VIEWER');
 
 -- Insert sample permissions
--- OWNER permissions (full access to everything)
 INSERT INTO permissions (role, feature, action) VALUES
 ('OWNER', 'users', 'delete'),
 ('OWNER', 'organizations', 'delete'),
-
--- ADMIN permissions (can manage users and organizations, view reports)
-INSERT INTO permissions (role, feature, action) VALUES
 ('ADMIN', 'users', 'create'),
 ('ADMIN', 'users', 'edit'),
 ('ADMIN', 'organizations', 'create'),
 ('ADMIN', 'organizations', 'edit'),
-
--- VIEWER permissions (read-only access)
-INSERT INTO permissions (role, feature, action) VALUES
 ('VIEWER', 'users', 'view'),
-('VIEWER', 'organizations', 'view'),
+('VIEWER', 'organizations', 'view');
 
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_organizations_parent_org_id ON organizations(parent_org_id);

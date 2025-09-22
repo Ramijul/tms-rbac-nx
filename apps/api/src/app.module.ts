@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { OrganizationModule } from './organization/organization.module';
 import { PermissionModule } from './permission/permission.module';
 import { AuthModule } from './auth/auth.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './auth/auth.module';
     OrganizationModule,
     PermissionModule,
     AuthModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [],

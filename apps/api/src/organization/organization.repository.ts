@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Organization } from './entities/organization.entity';
+import { OrgUserRole } from './entities/org-user-role.entity';
 
 @Injectable()
 export class OrganizationRepository {
   constructor(
     @InjectRepository(Organization)
-    private readonly repository: Repository<Organization>
+    private readonly repository: Repository<Organization>,
+    @InjectRepository(OrgUserRole)
+    private readonly orgUserRoleRepository: Repository<OrgUserRole>
   ) {}
 
   async findAll(): Promise<Organization[]> {
@@ -42,5 +45,14 @@ export class OrganizationRepository {
       where: { parentOrgId: id },
       relations: ['parentOrganization'],
     });
+  }
+
+  async findByUserId(userId: string): Promise<Organization[]> {
+    const userRoles = await this.orgUserRoleRepository.find({
+      where: { userId },
+      relations: ['organization', 'organization.parentOrganization'],
+    });
+
+    return userRoles.map((userRole) => userRole.organization);
   }
 }

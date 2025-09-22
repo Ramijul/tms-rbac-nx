@@ -28,6 +28,7 @@ describe('OrganizationService', () => {
       findTopLevelOrganizations: jest.fn(),
       findByParentId: jest.fn(),
       findChildren: jest.fn(),
+      findByUserId: jest.fn(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -112,6 +113,40 @@ describe('OrganizationService', () => {
 
       expect(mockRepository.findChildren).toHaveBeenCalledWith(1);
       expect(result).toEqual(children);
+    });
+  });
+
+  describe('findByUserId', () => {
+    it('should return organizations for a given user id', async () => {
+      const userId = 'user-123';
+      const userOrganizations = [mockOrganization, mockChildOrganization];
+      mockRepository.findByUserId.mockResolvedValue(userOrganizations);
+
+      const result = await service.findByUserId(userId);
+
+      expect(mockRepository.findByUserId).toHaveBeenCalledWith(userId);
+      expect(result).toEqual(userOrganizations);
+    });
+
+    it('should return empty array when user has no organizations', async () => {
+      const userId = 'user-with-no-orgs';
+      mockRepository.findByUserId.mockResolvedValue([]);
+
+      const result = await service.findByUserId(userId);
+
+      expect(mockRepository.findByUserId).toHaveBeenCalledWith(userId);
+      expect(result).toEqual([]);
+    });
+
+    it('should handle string user id correctly', async () => {
+      const userId = 'test-user-id-456';
+      const userOrganizations = [mockOrganization];
+      mockRepository.findByUserId.mockResolvedValue(userOrganizations);
+
+      const result = await service.findByUserId(userId);
+
+      expect(mockRepository.findByUserId).toHaveBeenCalledWith(userId);
+      expect(result).toEqual(userOrganizations);
     });
   });
 });

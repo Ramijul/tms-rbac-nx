@@ -27,4 +27,8 @@ export class OrganizationService {
   async findChildren(id: number): Promise<Organization[]> {
     return this.organizationRepository.findChildren(id);
   }
+
+  async findByUserId(userId: string): Promise<Organization[]> {
+    return this.organizationRepository.findByUserId(userId);
+  }
 }

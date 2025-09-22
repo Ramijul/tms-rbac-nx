@@ -7,6 +7,7 @@ import { OrganizationModule } from './organization/organization.module';
 import { PermissionModule } from './permission/permission.module';
 import { AuthModule } from './auth/auth.module';
 import { TaskModule } from './task/task.module';
+import { AuditLoggerModule } from './audit-logger/audit-logs.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TaskModule } from './task/task.module';
       }),
       inject: [ConfigService],
     }),
+    AuditLoggerModule,
     DatabaseModule,
     OrganizationModule,
     PermissionModule,

@@ -53,52 +53,103 @@ INSERT INTO organizations (id, name, parent_org_id) VALUES
 (1, 'Acme Corporation', NULL),
 (2, 'Engineering Department', 1),
 (3, 'Marketing Department', 1),
-(4, 'Frontend Team', 2),
-(5, 'Backend Team', 2),
-(6, 'Design Team', 3),
-(7, 'Content Team', 3);
+(4, 'ABC Company', NULL),
+(5, 'Backend Team', 4),
+(6, 'Design Team', 4),
+(7, 'Content Team', 4);
+
+-- Insert users for each role for each organization
+-- Password for all users: 123456 (hashed with bcrypt)
+INSERT INTO users (id, name, email, password) VALUES
+-- Acme Corporation users
+('550e8400-e29b-41d4-a716-446655440001', 'Acme Owner', 'acme.owner@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440002', 'Acme Admin', 'acme.admin@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440003', 'Acme Viewer', 'acme.viewer@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+
+-- Engineering Department users
+('550e8400-e29b-41d4-a716-446655440004', 'Engineering Owner', 'eng.owner@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440005', 'Engineering Admin', 'eng.admin@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440006', 'Engineering Viewer', 'eng.viewer@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+
+-- Marketing Department users
+('550e8400-e29b-41d4-a716-446655440007', 'Marketing Owner', 'marketing.owner@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440008', 'Marketing Admin', 'marketing.admin@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440009', 'Marketing Viewer', 'marketing.viewer@acme.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+
+-- ABC Company users
+('550e8400-e29b-41d4-a716-446655440010', 'ABC Owner', 'abc.owner@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440011', 'ABC Admin', 'abc.admin@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440012', 'ABC Viewer', 'abc.viewer@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+
+-- Backend Team users
+('550e8400-e29b-41d4-a716-446655440013', 'Backend Owner', 'backend.owner@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440014', 'Backend Admin', 'backend.admin@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440015', 'Backend Viewer', 'backend.viewer@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+
+-- Design Team users
+('550e8400-e29b-41d4-a716-446655440016', 'Design Owner', 'design.owner@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440017', 'Design Admin', 'design.admin@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440018', 'Design Viewer', 'design.viewer@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+
+-- Content Team users
+('550e8400-e29b-41d4-a716-446655440019', 'Content Owner', 'content.owner@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440020', 'Content Admin', 'content.admin@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
+('550e8400-e29b-41d4-a716-446655440021', 'Content Viewer', 'content.viewer@abc.com', '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+
+-- Insert user-organization role assignments
+INSERT INTO org_user_roles (org_id, user_id, role) VALUES
+-- Acme Corporation roles
+(1, '550e8400-e29b-41d4-a716-446655440001', 'OWNER'),
+(1, '550e8400-e29b-41d4-a716-446655440002', 'ADMIN'),
+(1, '550e8400-e29b-41d4-a716-446655440003', 'VIEWER'),
+
+-- Engineering Department roles
+(2, '550e8400-e29b-41d4-a716-446655440004', 'OWNER'),
+(2, '550e8400-e29b-41d4-a716-446655440005', 'ADMIN'),
+(2, '550e8400-e29b-41d4-a716-446655440006', 'VIEWER'),
+
+-- Marketing Department roles
+(3, '550e8400-e29b-41d4-a716-446655440007', 'OWNER'),
+(3, '550e8400-e29b-41d4-a716-446655440008', 'ADMIN'),
+(3, '550e8400-e29b-41d4-a716-446655440009', 'VIEWER'),
+
+-- ABC Company roles
+(4, '550e8400-e29b-41d4-a716-446655440010', 'OWNER'),
+(4, '550e8400-e29b-41d4-a716-446655440011', 'ADMIN'),
+(4, '550e8400-e29b-41d4-a716-446655440012', 'VIEWER'),
+
+-- Backend Team roles
+(5, '550e8400-e29b-41d4-a716-446655440013', 'OWNER'),
+(5, '550e8400-e29b-41d4-a716-446655440014', 'ADMIN'),
+(5, '550e8400-e29b-41d4-a716-446655440015', 'VIEWER'),
+
+-- Design Team roles
+(6, '550e8400-e29b-41d4-a716-446655440016', 'OWNER'),
+(6, '550e8400-e29b-41d4-a716-446655440017', 'ADMIN'),
+(6, '550e8400-e29b-41d4-a716-446655440018', 'VIEWER'),
+
+-- Content Team roles
+(7, '550e8400-e29b-41d4-a716-446655440019', 'OWNER'),
+(7, '550e8400-e29b-41d4-a716-446655440020', 'ADMIN'),
+(7, '550e8400-e29b-41d4-a716-446655440021', 'VIEWER');
 
 -- Insert sample permissions
 -- OWNER permissions (full access to everything)
 INSERT INTO permissions (role, feature, action) VALUES
-('OWNER', 'users', 'create'),
 ('OWNER', 'users', 'delete'),
-('OWNER', 'users', 'edit'),
-('OWNER', 'users', 'view'),
-('OWNER', 'organizations', 'create'),
 ('OWNER', 'organizations', 'delete'),
-('OWNER', 'organizations', 'edit'),
-('OWNER', 'organizations', 'view'),
-('OWNER', 'permissions', 'create'),
-('OWNER', 'permissions', 'delete'),
-('OWNER', 'permissions', 'edit'),
-('OWNER', 'permissions', 'view'),
-('OWNER', 'reports', 'create'),
-('OWNER', 'reports', 'delete'),
-('OWNER', 'reports', 'edit'),
-('OWNER', 'reports', 'view'),
-('OWNER', 'settings', 'create'),
-('OWNER', 'settings', 'delete'),
-('OWNER', 'settings', 'edit'),
-('OWNER', 'settings', 'view');
 
 -- ADMIN permissions (can manage users and organizations, view reports)
 INSERT INTO permissions (role, feature, action) VALUES
 ('ADMIN', 'users', 'create'),
 ('ADMIN', 'users', 'edit'),
-('ADMIN', 'users', 'view'),
 ('ADMIN', 'organizations', 'create'),
 ('ADMIN', 'organizations', 'edit'),
-('ADMIN', 'organizations', 'view'),
-('ADMIN', 'permissions', 'view'),
-('ADMIN', 'reports', 'view'),
-('ADMIN', 'settings', 'view');
 
 -- VIEWER permissions (read-only access)
 INSERT INTO permissions (role, feature, action) VALUES
 ('VIEWER', 'users', 'view'),
 ('VIEWER', 'organizations', 'view'),
-('VIEWER', 'reports', 'view');
 
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_organizations_parent_org_id ON organizations(parent_org_id);

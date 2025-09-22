@@ -17,7 +17,7 @@ export class AuthService {
 
     // Find user by email
     const user = await this.authRepository.findByEmail(email);
-    if (!user) {
+    if (!user || !user.password) {
       throw new UnauthorizedException('Invalid credentials');
     }
 

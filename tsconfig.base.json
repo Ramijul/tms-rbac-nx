@@ -20,6 +20,9 @@
     "paths": {
       "@tms-rbac-nx/data/*": [
         "libs/data/*"
+      ],
+      "@tms-rbac-nx/auth/*": [
+        "libs/auth/*"
       ]
     }
   },

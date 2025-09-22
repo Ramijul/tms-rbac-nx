@@ -55,4 +55,19 @@ export class OrganizationRepository {
 
     return userRoles.map((userRole) => userRole.organization);
   }
+
+  async findAllWithUsers(): Promise<any[]> {
+    return this.repository
+      .createQueryBuilder('org')
+      .leftJoinAndSelect('org_user_roles', 'our', 'our.org_id = org.id')
+      .leftJoinAndSelect('users', 'user', 'user.id = our.user_id')
+      .select([
+        'org.id',
+        'org.name',
+        'org.parent_org_id',
+        'our.role',
+        'user.email',
+      ])
+      .getRawMany();
+  }
 }

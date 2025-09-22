@@ -21,10 +21,10 @@ import axios from 'axios';
 describe('Organization E2E Tests', () => {
   const baseURL = (process.env.API_URL || 'http://localhost:3000') + '/api';
 
-  describe('GET /organizations/my-organizations', () => {
+  describe('GET /orgs/my-orgs', () => {
     it('should return 401 when no token is provided', async () => {
       try {
-        await axios.get(`${baseURL}/organizations/my-organizations`);
+        await axios.get(`${baseURL}/orgs/my-orgs`);
         fail('Expected 401 Unauthorized error');
       } catch (error: any) {
         expect(error.response?.status).toBe(401);
@@ -34,7 +34,7 @@ describe('Organization E2E Tests', () => {
 
     it('should return 401 when invalid token is provided', async () => {
       try {
-        await axios.get(`${baseURL}/organizations/my-organizations`, {
+        await axios.get(`${baseURL}/orgs/my-orgs`, {
           headers: {
             Authorization: 'Bearer invalid-token',
           },
@@ -48,7 +48,7 @@ describe('Organization E2E Tests', () => {
 
     it('should return 401 when malformed authorization header is provided', async () => {
       try {
-        await axios.get(`${baseURL}/organizations/my-organizations`, {
+        await axios.get(`${baseURL}/orgs/my-orgs`, {
           headers: {
             Authorization: 'InvalidFormat token',
           },
@@ -87,14 +87,11 @@ describe('Organization E2E Tests', () => {
 
       // Now test the organizations endpoint with the valid token
       try {
-        const response = await axios.get(
-          `${baseURL}/organizations/my-organizations`,
-          {
-            headers: {
-              Authorization: `Bearer ${validToken}`,
-            },
-          }
-        );
+        const response = await axios.get(`${baseURL}/orgs/my-orgs`, {
+          headers: {
+            Authorization: `Bearer ${validToken}`,
+          },
+        });
 
         expect(response.status).toBe(200);
         expect(Array.isArray(response.data)).toBe(true);
@@ -152,14 +149,11 @@ describe('Organization E2E Tests', () => {
       }
 
       // Test the organizations endpoint
-      const response = await axios.get(
-        `${baseURL}/organizations/my-organizations`,
-        {
-          headers: {
-            Authorization: `Bearer ${validToken}`,
-          },
-        }
-      );
+      const response = await axios.get(`${baseURL}/orgs/my-orgs`, {
+        headers: {
+          Authorization: `Bearer ${validToken}`,
+        },
+      });
 
       expect(response.status).toBe(200);
       expect(Array.isArray(response.data)).toBe(true);
@@ -196,14 +190,11 @@ describe('Organization E2E Tests', () => {
       }
 
       // Test the organizations endpoint
-      const response = await axios.get(
-        `${baseURL}/organizations/my-organizations`,
-        {
-          headers: {
-            Authorization: `Bearer ${validToken}`,
-          },
-        }
-      );
+      const response = await axios.get(`${baseURL}/orgs/my-orgs`, {
+        headers: {
+          Authorization: `Bearer ${validToken}`,
+        },
+      });
 
       expect(response.status).toBe(200);
       expect(Array.isArray(response.data)).toBe(true);
@@ -240,14 +231,11 @@ describe('Organization E2E Tests', () => {
       }
 
       // Test the organizations endpoint
-      const response = await axios.get(
-        `${baseURL}/organizations/my-organizations`,
-        {
-          headers: {
-            Authorization: `Bearer ${validToken}`,
-          },
-        }
-      );
+      const response = await axios.get(`${baseURL}/orgs/my-orgs`, {
+        headers: {
+          Authorization: `Bearer ${validToken}`,
+        },
+      });
 
       expect(response.status).toBe(200);
       expect(Array.isArray(response.data)).toBe(true);
@@ -284,14 +272,11 @@ describe('Organization E2E Tests', () => {
       }
 
       // Test the organizations endpoint
-      const response = await axios.get(
-        `${baseURL}/organizations/my-organizations`,
-        {
-          headers: {
-            Authorization: `Bearer ${validToken}`,
-          },
-        }
-      );
+      const response = await axios.get(`${baseURL}/orgs/my-orgs`, {
+        headers: {
+          Authorization: `Bearer ${validToken}`,
+        },
+      });
 
       expect(response.status).toBe(200);
       expect(Array.isArray(response.data)).toBe(true);

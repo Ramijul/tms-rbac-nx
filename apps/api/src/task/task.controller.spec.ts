@@ -104,10 +104,18 @@ describe('TaskController', () => {
     it('should update a task', async () => {
       const updateTaskDto: UpdateTaskDto = { title: 'Updated Task' };
       const updatedTask = { ...mockTask, ...updateTaskDto };
+      const mockRequest = {
+        user: { userId: '123', email: 'test@example.com' },
+      } as any;
 
       service.update.mockResolvedValue(updatedTask as any);
 
-      const result = await controller.update('1', updateTaskDto);
+      const result = await controller.update(
+        '1',
+        updateTaskDto,
+        '1',
+        mockRequest
+      );
 
       expect(service.update).toHaveBeenCalledWith('1', updateTaskDto);
       expect(result).toEqual(updatedTask);
@@ -117,9 +125,13 @@ describe('TaskController', () => {
   describe('toggleComplete', () => {
     it('should toggle task completion status', async () => {
       const completedTask = { ...mockTask, isCompleted: true };
+      const mockRequest = {
+        user: { userId: '123', email: 'test@example.com' },
+      } as any;
+
       service.toggleComplete.mockResolvedValue(completedTask as any);
 
-      const result = await controller.toggleComplete('1');
+      const result = await controller.toggleComplete('1', '1', mockRequest);
 
       expect(service.toggleComplete).toHaveBeenCalledWith('1');
       expect(result).toEqual(completedTask);
@@ -128,10 +140,16 @@ describe('TaskController', () => {
 
   describe('remove', () => {
     it('should delete a task', async () => {
+      const mockRequest = {
+        user: { userId: '123', email: 'test@example.com' },
+      } as any;
+
+      service.findById.mockResolvedValue(mockTask as any);
       service.delete.mockResolvedValue(undefined);
 
-      await controller.remove('1');
+      await controller.remove('1', '1', mockRequest);
 
+      expect(service.findById).toHaveBeenCalledWith('1');
       expect(service.delete).toHaveBeenCalledWith('1');
     });
   });

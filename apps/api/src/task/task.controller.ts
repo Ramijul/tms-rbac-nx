@@ -16,11 +16,17 @@ import {
   JwtAuthGuard,
   AuthenticatedRequest,
 } from '@tms-rbac-nx/auth/jwt-auth.guard';
+import { AuditLoggerService } from '../audit-logger/audit-logs.service';
+
+const RESOURCE = 'task';
 
 @Controller('org/:orgId/tasks')
 @UseGuards(JwtAuthGuard)
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(
+    private readonly taskService: TaskService,
+    private readonly auditLogger: AuditLoggerService
+  ) {}
 
   @Post()
   async create(
@@ -31,7 +37,18 @@ export class TaskController {
     // Set the owner to the authenticated user and orgId from path
     createTaskDto.ownerId = req.user.userId;
     createTaskDto.orgId = parseInt(orgId);
-    return this.taskService.create(createTaskDto);
+
+    const task = await this.taskService.create(createTaskDto);
+
+    this.auditLogger.log({
+      resource: RESOURCE,
+      action: 'Created a new task',
+      orgId: parseInt(orgId),
+      user: { id: req.user.userId, email: req.user.email },
+      item: { id: task.id, title: task.title },
+    });
+
+    return task;
   }
 
   @Get()
@@ -48,18 +65,59 @@ export class TaskController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateTaskDto: UpdateTaskDto
+    @Body() updateTaskDto: UpdateTaskDto,
+    @Param('orgId') orgId: string,
+    @Req() req: AuthenticatedRequest
   ): Promise<Task> {
-    return this.taskService.update(id, updateTaskDto);
+    const task = await this.taskService.update(id, updateTaskDto);
+
+    this.auditLogger.log({
+      resource: RESOURCE,
+      action: 'Updated task',
+      orgId: parseInt(orgId),
+      user: { id: req.user.userId, email: req.user.email },
+      item: { id: task.id, title: task.title },
+    });
+
+    return task;
   }
 
   @Patch(':id/toggle-complete')
-  async toggleComplete(@Param('id') id: string): Promise<Task> {
-    return this.taskService.toggleComplete(id);
+  async toggleComplete(
+    @Param('id') id: string,
+    @Param('orgId') orgId: string,
+    @Req() req: AuthenticatedRequest
+  ): Promise<Task> {
+    const task = await this.taskService.toggleComplete(id);
+
+    this.auditLogger.log({
+      resource: RESOURCE,
+      action: `Status changed to ${
+        task.isCompleted ? 'completed' : 'incomplete'
+      }`,
+      orgId: parseInt(orgId),
+      user: { id: req.user.userId, email: req.user.email },
+      item: { id: task.id, title: task.title },
+    });
+
+    return task;
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.taskService.delete(id);
+  async remove(
+    @Param('id') id: string,
+    @Param('orgId') orgId: string,
+    @Req() req: AuthenticatedRequest
+  ): Promise<void> {
+    const task = await this.taskService.findById(id);
+    await this.taskService.delete(id);
+
+    this.auditLogger.log({
+      resource: RESOURCE,
+      action: 'Deleted task',
+      orgId: parseInt(orgId),
+      user: { id: req.user.userId, email: req.user.email },
+      item: task,
+    });
   }
 }
